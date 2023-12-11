@@ -10,12 +10,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.getcode.R
+import com.getcode.analytics.AnalyticsScreenWatcher
+import com.getcode.manager.AnalyticsManager
 import com.getcode.theme.White
 import com.getcode.theme.sheetHeight
 import com.getcode.view.components.MarkdownText
@@ -25,6 +28,11 @@ import com.getcode.view.components.MarkdownText
 fun AccountFaq() {
     val viewModel = hiltViewModel<AccountFaqViewModel>()
     val dataState by viewModel.uiFlow.collectAsState()
+
+    AnalyticsScreenWatcher(
+        lifecycleOwner = LocalLifecycleOwner.current,
+        event = AnalyticsManager.Screen.Faq
+    )
 
     Box(
         modifier = Modifier

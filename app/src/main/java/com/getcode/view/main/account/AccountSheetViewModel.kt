@@ -47,6 +47,7 @@ class AccountSheetViewModel @Inject constructor(
     val uiFlow = MutableStateFlow(AccountSheetUiModel())
     var logoClickCount = 0
 
+<<<<<<< HEAD
     fun reset() {
         uiFlow.tryEmit(uiFlow.value.copy(isPhoneLinked = phoneRepository.phoneLinked))
         prefRepository.getFirstOrDefault(PrefsBool.IS_DEBUG_ACTIVE, false)
@@ -57,16 +58,6 @@ class AccountSheetViewModel @Inject constructor(
 
     fun logout(activity: Activity) {
         authManager.logout(activity)
-    }
-
-    fun onNavigation(page: AccountPage) {
-        when (page) {
-            AccountPage.DEPOSIT -> AnalyticsManager.Screen.Deposit
-            AccountPage.WITHDRAW -> AnalyticsManager.Screen.Withdraw
-            AccountPage.ACCESS_KEY -> AnalyticsManager.Screen.Backup
-            AccountPage.FAQ -> AnalyticsManager.Screen.Faq
-            else -> null
-        }?.let { analyticsManager.open(it) }
     }
 
     fun onLogoClick() {
