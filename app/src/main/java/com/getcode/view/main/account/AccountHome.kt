@@ -32,11 +32,6 @@ fun AccountHome(
     val dataState by viewModel.stateFlow.collectAsState()
     val context = LocalContext.current
 
-    fun onPage(page: AccountPage) {
-        onPageSelected(page)
-        viewModel.dispatchEvent(AccountSheetViewModel.Event.Navigate(page))
-    }
-
     Box(modifier = Modifier.fillMaxHeight()) {
         Column(
             modifier = Modifier
@@ -46,19 +41,19 @@ fun AccountHome(
                 AccountMainItem(
                     name = R.string.title_depositKin,
                     icon = R.drawable.ic_menu_deposit
-                ) { onPage(AccountPage.DEPOSIT) },
+                ) { onPageSelected(AccountPage.DEPOSIT) },
                 AccountMainItem(
                     name = R.string.title_withdrawKin,
                     icon = R.drawable.ic_menu_withdraw
-                ) { onPage(AccountPage.WITHDRAW) },
+                ) { onPageSelected(AccountPage.WITHDRAW) },
                 AccountMainItem(
                     name = R.string.title_myAccount,
                     icon = R.drawable.ic_menu_account
-                ) { onPage(AccountPage.ACCOUNT_DETAILS) },
+                ) { onPageSelected(AccountPage.ACCOUNT_DETAILS) },
                 AccountMainItem(
                     name = R.string.title_faq,
                     icon = R.drawable.ic_faq,
-                ) { onPage(AccountPage.FAQ) },
+                ) { onPageSelected(AccountPage.FAQ) },
                 AccountMainItem(
                     name = R.string.action_logout,
                     icon = R.drawable.ic_menu_logout
@@ -86,7 +81,7 @@ fun AccountHome(
                 AccountMainItem(
                     name = R.string.account_debug_options,
                     icon = R.drawable.ic_bug,
-                ) { onPage(AccountPage.ACCOUNT_DEBUG_OPTIONS) }
+                ) { onPageSelected(AccountPage.ACCOUNT_DEBUG_OPTIONS) }
                     .let { actions.add(4, it) }
             }
 

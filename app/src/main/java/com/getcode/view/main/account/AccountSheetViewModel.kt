@@ -67,7 +67,6 @@ class AccountSheetViewModel @Inject constructor(
         data class OnPhoneLinked(val linked: Boolean) : Event
         data class OnDebugChanged(val isDebug: Boolean): Event
         data object LogoClicked : Event
-        data class Navigate(val page: AccountPage): Event
     }
 
     // TODO: handle this differently
@@ -96,20 +95,6 @@ class AccountSheetViewModel @Inject constructor(
                 prefRepository.set(PrefsBool.IS_DEBUG_ACTIVE, !it)
             }.launchIn(viewModelScope)
 
-        eventFlow
-            .filterIsInstance<Event.Navigate>()
-            .map { it.page }
-            .mapNotNull { page ->
-                when (page) {
-                    AccountPage.DEPOSIT -> AnalyticsManager.Screen.Deposit
-                    AccountPage.WITHDRAW -> AnalyticsManager.Screen.Withdraw
-                    AccountPage.ACCESS_KEY -> AnalyticsManager.Screen.Backup
-                    AccountPage.FAQ -> AnalyticsManager.Screen.Faq
-                    else -> null
-                }
-            }.onEach {
-                analyticsManager.open(it)
-            }.launchIn(viewModelScope)
     }
 
     companion object {
@@ -123,8 +108,6 @@ class AccountSheetViewModel @Inject constructor(
                 is Event.OnDebugChanged -> { state ->
                     state.copy(isDebug = event.isDebug, logoClickCount = 0)
                 }
-
-                is Event.Navigate -> { state -> state }
             }
         }
     }
